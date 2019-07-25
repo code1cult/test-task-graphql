@@ -1,5 +1,7 @@
 import React from 'react';
-import { Input, Button, RadioGroup, FormControlLabel, Radio, Select, MenuItem, FormHelperText, Divider } from '@material-ui/core';;
+import { Input, Button, RadioGroup, FormControlLabel, Radio, Select, MenuItem, FormHelperText, Divider } from '@material-ui/core';
+import data from './data.json';
+
 const Navigation = ({
     repo,
     onOrganizationSearch,
@@ -29,7 +31,8 @@ class OrganizationSearch extends React.Component {
     };
 
     onSubmit = event => {
-        this.props.onOrganizationSearch(this.state);
+        const { onOrganizationSearch } = this.props;
+        onOrganizationSearch(this.state);
         event.preventDefault();
     };
 
@@ -65,31 +68,22 @@ class OrganizationSearch extends React.Component {
                     value={license}
                     onChange={handleChange}
                 >
-                    <MenuItem value={''}></MenuItem>
-                    <MenuItem value={'afl-3.0'}>afl-3.0</MenuItem>
-                    <MenuItem value={'apache-2.0'}>apache-2.0</MenuItem>
-                    <MenuItem value={'artistic-2.0'}>artistic-2.0</MenuItem>
-                    <MenuItem value={'cc'}>cc</MenuItem>
-                    <MenuItem value={'mit'}>mit</MenuItem>
+                    {data && data.license.map((value,i)=> 
+                    <MenuItem key={i} value={value}>{value}</MenuItem>
+                    )}
                 </Select>
                 <Divider />
                 <FormHelperText>stars</FormHelperText>
                 <RadioGroup aria-label="position" name="position" value={stars} onChange={starsChange} row>
+                    
+                {data && data.stars.map((value,i)=> 
                     <FormControlLabel
-                        value="10"
+                        key={i}
+                        value={value}
                         control={<Radio color="primary" />}
-                        label="10"
-                    />
-                    <FormControlLabel
-                        value="100"
-                        control={<Radio color="primary" />}
-                        label="100"
-                    />
-                    <FormControlLabel
-                        value="1000"
-                        control={<Radio color="primary" />}
-                        label="1000"
-                    />
+                        label={value}
+                                    />
+                 )}
                 </RadioGroup>
                 <Divider />
 
