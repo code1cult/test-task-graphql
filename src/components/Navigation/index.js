@@ -26,8 +26,8 @@ class OrganizationSearch extends React.Component {
     };
 
     onChange = event => {
-        const { target: { value } } = event;
-        this.setState({ repo: value });
+        const { target: { value, name } } = event;
+        this.setState({ [name]: value });
     };
 
     onSubmit = event => {
@@ -36,25 +36,17 @@ class OrganizationSearch extends React.Component {
         event.preventDefault();
     };
 
-    handleChange = event => {
-        const { target: { value } } = event;
-        this.setState({ license: value });
-    };
-
-    starsChange = event => {
-        const { target: { value } } = event;
-        this.setState({ stars: value });
-    };
 
     render() {
         const { repo, license, stars } = this.state;
-        const { onChange, onSubmit, handleChange, starsChange } = this;
+        const { onChange, onSubmit} = this;
 
 
         return (
             <>
                 <form onSubmit={onSubmit}>
                     <Input
+                        name={'repo'}
                         value={repo}
                         onChange={onChange}
                     />
@@ -66,7 +58,8 @@ class OrganizationSearch extends React.Component {
                 <Select
                     fullWidth
                     value={license}
-                    onChange={handleChange}
+                    onChange={onChange}
+                    name={'license'}
                 >
                     {data && data.license.map((value,i)=> 
                     <MenuItem key={i} value={value}>{value}</MenuItem>
@@ -74,7 +67,7 @@ class OrganizationSearch extends React.Component {
                 </Select>
                 <Divider />
                 <FormHelperText>stars</FormHelperText>
-                <RadioGroup aria-label="position" name="position" value={stars} onChange={starsChange} row>
+                <RadioGroup aria-label="position" name="stars" value={stars} onChange={onChange} row>
                     
                 {data && data.stars.map((value,i)=> 
                     <FormControlLabel
